@@ -1,0 +1,29 @@
+meta {
+  name: Update Product - Not Found
+  type: http
+  seq: 11
+}
+
+put {
+  url: {{baseUrl}}/products/999999
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Some Product",
+    "price": 10.00,
+    "quantity": 1
+  }
+}
+
+tests {
+  test("status is 404", function() {
+    expect(res.status).to.equal(404);
+  });
+
+  test("response message is product not found", function() {
+    expect(res.body.message).to.equal("product not found");
+  });
+}

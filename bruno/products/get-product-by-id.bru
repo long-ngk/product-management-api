@@ -1,0 +1,31 @@
+meta {
+  name: Get Product by ID
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/products/{{productId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("response has correct id", function() {
+    expect(res.body.id).to.equal(bru.getVar("productId"));
+  });
+
+  test("response has required fields", function() {
+    expect(res.body).to.have.property("id");
+    expect(res.body).to.have.property("name");
+    expect(res.body).to.have.property("description");
+    expect(res.body).to.have.property("price");
+    expect(res.body).to.have.property("quantity");
+    expect(res.body).to.have.property("created_at");
+    expect(res.body).to.have.property("updated_at");
+  });
+}

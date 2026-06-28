@@ -1,0 +1,29 @@
+meta {
+  name: Get Products by Keyword
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/products?keyword=laptop
+  body: none
+  auth: none
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("response is an array", function() {
+    expect(res.body).to.be.an("array");
+  });
+
+  test("all results contain keyword in name or description", function() {
+    res.body.forEach(function(product) {
+      const nameMatch = product.name.toLowerCase().includes("laptop");
+      const descMatch = product.description && product.description.toLowerCase().includes("laptop");
+      expect(nameMatch || descMatch).to.be.true;
+    });
+  });
+}

@@ -180,7 +180,64 @@ go run ./cmd/server/
 
 The server will start on `http://localhost:8080`.
 
-## Testing
+## Testing with Bruno
+
+[Bruno](https://www.usebruno.com/) is an offline API client for testing server endpoints. The collection is pre-configured in the `bruno/` directory.
+
+### Installation
+
+Download and install Bruno from [https://www.usebruno.com/downloads](https://www.usebruno.com/downloads).
+
+### Open the Collection
+
+1. Open Bruno
+2. Click **Open Collection**
+3. Navigate to the `bruno/` folder in this project
+
+### Configure the Environment
+
+The collection uses the **local** environment with two variables:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `baseUrl` | `http://localhost:8080` | Base URL of the server |
+| `productId` | `1` | Product ID used by GET/PUT/DELETE requests |
+
+Select the environment from the dropdown in the top-right corner of Bruno.
+
+> **Tip:** The **Create Product** request (seq 1) automatically saves the newly created product's `id` into the `productId` variable, so subsequent requests use the correct ID.
+
+### Test Cases
+
+Requests are numbered (`seq`) to follow a logical flow:
+
+| Seq | Name | Method | Endpoint | Description |
+|-----|------|--------|----------|-------------|
+| 1 | Create Product | POST | `/products` | Create a product and save its `productId` to env |
+| 2 | Create Product (no description) | POST | `/products` | Create a product without a description |
+| 3 | Create Product - Validation Errors | POST | `/products` | Verify validation errors (empty name, negative price) |
+| 4 | Create Product - Invalid JSON | POST | `/products` | Verify error on malformed JSON body |
+| 5 | Get All Products | GET | `/products` | Retrieve all products |
+| 6 | Get Products by Keyword | GET | `/products?keyword=laptop` | Search products by keyword |
+| 7 | Get Product by ID | GET | `/products/:id` | Retrieve a product by ID |
+| 8 | Get Product - Not Found | GET | `/products/999999` | Verify 404 when ID does not exist |
+| 9 | Get Product - Invalid ID | GET | `/products/abc` | Verify 404 on non-numeric ID |
+| 10 | Update Product | PUT | `/products/:id` | Update product details |
+| 11 | Update Product - Not Found | PUT | `/products/999999` | Verify 404 when updating a non-existent product |
+| 12 | Delete Product | DELETE | `/products/:id` | Delete a product |
+| 13 | Delete Product - Not Found | DELETE | `/products/999999` | Verify 404 when deleting a non-existent product |
+
+### Run the Entire Collection
+
+To run all requests in order:
+
+1. Right-click the **products** collection in the sidebar
+2. Select **Run**
+3. Bruno will execute each request and display pass/fail results per test
+
+---
+
+## Unit & Property-based Tests
 
 Run all tests:
 ```bash

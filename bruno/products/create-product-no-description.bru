@@ -1,0 +1,29 @@
+meta {
+  name: Create Product (no description)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/products
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Simple Product",
+    "price": 50.00,
+    "quantity": 5
+  }
+}
+
+tests {
+  test("status is 201", function() {
+    expect(res.status).to.equal(201);
+  });
+
+  test("description is null", function() {
+    expect(res.body.description).to.be.null;
+  });
+}

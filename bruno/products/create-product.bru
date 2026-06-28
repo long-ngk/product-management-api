@@ -1,0 +1,52 @@
+meta {
+  name: Create Product
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/products
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Laptop Dell XPS",
+    "description": "High performance laptop",
+    "price": 999.99,
+    "quantity": 10
+  }
+}
+
+tests {
+  test("status is 201", function() {
+    expect(res.status).to.equal(201);
+  });
+
+  test("response has id", function() {
+    expect(res.body.id).to.be.a("number");
+    expect(res.body.id).to.be.above(0);
+  });
+
+  test("response has correct name", function() {
+    expect(res.body.name).to.equal("Laptop Dell XPS");
+  });
+
+  test("response has correct price", function() {
+    expect(res.body.price).to.equal(999.99);
+  });
+
+  test("response has correct quantity", function() {
+    expect(res.body.quantity).to.equal(10);
+  });
+
+  test("response has created_at and updated_at", function() {
+    expect(res.body.created_at).to.be.a("string");
+    expect(res.body.updated_at).to.be.a("string");
+  });
+
+  test("save product id to env", function() {
+    bru.setVar("productId", res.body.id);
+  });
+}

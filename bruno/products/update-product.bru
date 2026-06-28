@@ -1,0 +1,42 @@
+meta {
+  name: Update Product
+  type: http
+  seq: 10
+}
+
+put {
+  url: {{baseUrl}}/products/{{productId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Laptop Dell XPS Updated",
+    "description": "Updated description",
+    "price": 1099.99,
+    "quantity": 8
+  }
+}
+
+tests {
+  test("status is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("name is updated", function() {
+    expect(res.body.name).to.equal("Laptop Dell XPS Updated");
+  });
+
+  test("price is updated", function() {
+    expect(res.body.price).to.equal(1099.99);
+  });
+
+  test("quantity is updated", function() {
+    expect(res.body.quantity).to.equal(8);
+  });
+
+  test("id is unchanged", function() {
+    expect(res.body.id).to.equal(bru.getVar("productId"));
+  });
+}
