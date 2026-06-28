@@ -47,6 +47,6 @@ tests {
   });
 
   test("save product id to env", function() {
-    bru.setVar("productId", res.body.id);
+    bru.setEnvVar("productId", res.body.id);
   });
 }

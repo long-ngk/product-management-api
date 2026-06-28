@@ -37,6 +37,6 @@ tests {
   });
 
   test("id is unchanged", function() {
-    expect(res.body.id).to.equal(bru.getVar("productId"));
+    expect(res.body.id).to.equal(bru.getEnvVar("productId"));
   });
 }

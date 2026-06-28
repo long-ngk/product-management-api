@@ -16,7 +16,7 @@ tests {
   });
 
   test("response has correct id", function() {
-    expect(res.body.id).to.equal(bru.getVar("productId"));
+    expect(res.body.id).to.equal(bru.getEnvVar("productId"));
   });
 
   test("response has required fields", function() {
