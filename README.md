@@ -35,10 +35,16 @@ Client HTTP → Gin Router → Handler → Service → Repository → PostgreSQL
 product-management-server/
 ├── cmd/
 │   └── server/
-│       └── main.go                  # Entry point, dependency injection
+│       └── main.go                  # Entry point: loads config, boots app
+├── config/
+│   └── config.go                    # Loads configuration from env vars
 ├── internal/
+│   ├── app/
+│   │   └── app.go                   # Wires dependencies, creates Gin router
+│   ├── routes/
+│   │   └── routes.go                # Registers all HTTP routes
 │   ├── handler/
-│   │   ├── product_handler.go       # HTTP handlers
+│   │   ├── product_handler.go       # HTTP handlers (parse request, call service, write response)
 │   │   └── product_handler_test.go  # Handler unit + property tests
 │   ├── service/
 │   │   ├── product_service.go       # Service interface

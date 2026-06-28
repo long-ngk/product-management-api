@@ -20,15 +20,6 @@ func NewProductHandler(service service.ProductService) *ProductHandler {
 	return &ProductHandler{service: service}
 }
 
-// RegisterRoutes registers all product routes on the given Gin engine.
-func (h *ProductHandler) RegisterRoutes(router *gin.Engine) {
-	router.POST("/products", h.CreateProduct)
-	router.GET("/products", h.GetProducts)
-	router.GET("/products/:id", h.GetProductByID)
-	router.PUT("/products/:id", h.UpdateProduct)
-	router.DELETE("/products/:id", h.DeleteProduct)
-}
-
 // CreateProduct handles POST /products.
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	var req model.CreateProductRequest

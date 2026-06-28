@@ -64,11 +64,17 @@ func (m *mockProductService) DeleteProduct(ctx context.Context, id int) error {
 
 // --- Helper ---
 
+// setupRouter registers all product routes directly to avoid import cycles
+// between the handler and routes packages.
 func setupRouter(svc *mockProductService) *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 	h := NewProductHandler(svc)
-	h.RegisterRoutes(router)
+	router.POST("/products", h.CreateProduct)
+	router.GET("/products", h.GetProducts)
+	router.GET("/products/:id", h.GetProductByID)
+	router.PUT("/products/:id", h.UpdateProduct)
+	router.DELETE("/products/:id", h.DeleteProduct)
 	return router
 }
 
