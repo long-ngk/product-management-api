@@ -158,8 +158,14 @@ docker run --name product-db \
 
 ### 2. Run Database Migration
 
+If you have `psql` installed locally:
 ```bash
 psql -U postgres -d product_management -f migrations/001_create_products.sql
+```
+
+Or using Docker (no local `psql` required):
+```bash
+docker exec -i product-db psql -U postgres -d product_management < migrations/001_create_products.sql
 ```
 
 ### 3. Configure Environment
